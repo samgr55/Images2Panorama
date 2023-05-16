@@ -1,5 +1,5 @@
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
-from stitching import *
+from . import stitching
 import cv2 ,os
 
 
