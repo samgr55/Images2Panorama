@@ -35,7 +35,7 @@ sam = list(map(path.__add__,  myList))
 # print(sam)
 
 
-panorama = stitcher.stitch(sam) # hopefully it will work bus still I need to do some tuning (WIP)
+panorama = stitcher.stitch(sam) # hopefully it will work but still I need to do some tuning (WIP)
 
 
 cv2.imwrite("test1.jpg", panorama)
