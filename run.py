@@ -112,9 +112,9 @@ else:
        (status,panorama) = stitcher2.stitch(images)
        
 
-cv2.imshow('image',resized)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+# cv2.imshow('image',resized)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
 if (status):
     print("[INFO]: The panoramic photo has been created successfully") # this is what you want Omar right? if yes, take the status value
 else:
