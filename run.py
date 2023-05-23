@@ -7,6 +7,7 @@ parser = ArgumentParser()
 parser.add_argument("-vp", "--videoProcess" ,action="store_true", help="add this argument if you want to stitch images from video")
 parser.add_argument("-i", "--input" ,type=str,default="imgs_1/", help="add this argument if you have different directory")
 parser.add_argument("-v", "--video" ,type=str,default="video_1.mov", help="add this argument if you have different directory")
+parser.add_argument("-o", "--output" ,type=str,default="p1.png", help="add this argument if you have different directory")
 args = parser.parse_args()
 
 
@@ -56,9 +57,7 @@ if (videoProcess):
         myList2 = os.listdir(tempPath)
         sam = list(map(tempPath.__add__,  myList2))
         panorama = stitcher.stitch(sam)
-        files = glob.glob(tempPath)
-        for f in files:
-            os.remove(f)
+
         
     else:
         print("[INFO]: Video has been taken in Portrait Mode")
@@ -137,7 +136,10 @@ else:
        #     
        #     images.append(resized)
        # (status,panorama) = stitcher2.stitch(images)
-       
+
+# files = glob.glob(tempPath)
+# for f in files:
+#     os.remove(f)       
 
 # cv2.imshow('image',resized)
 # cv2.waitKey(0)
@@ -150,4 +152,4 @@ else:
 # cv2.imshow('Image',panorama)
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
-cv2.imwrite("test1.png", panorama)
+cv2.imwrite(args.output, panorama)
