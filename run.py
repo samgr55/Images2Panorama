@@ -5,8 +5,8 @@ import stitching ,cv2 ,os, glob
 parser = ArgumentParser()
 
 parser.add_argument("-v", "--video" ,action="store_true", help="add this argument if you want to stitch images from video")
+parser.add_argument("-i", "--input" ,type=str,default="imgs_1/", help="add this argument if you have different directory")
 args = parser.parse_args()
-
 
 
 
@@ -55,6 +55,9 @@ if (video):
         myList2 = os.listdir(tempPath)
         sam = list(map(tempPath.__add__,  myList2))
         panorama = stitcher.stitch(sam)
+        files = glob.glob(tempPath)
+        for f in files:
+            os.remove(f)
         
     else:
         print("[INFO]: Video has been taken in Portrait Mode")
@@ -68,7 +71,7 @@ if (video):
         
 
 else:
-    path = "imgs_2/"
+    path = args.input
     myList = os.listdir(path)
     img = cv2.imread(path+myList[0])
     width = int(img.shape[1])
@@ -97,6 +100,10 @@ else:
         sam = list(map(tempPath.__add__,  myList2))
         panorama = stitcher.stitch(sam)
         status = True
+        # files = glob.glob(tempPath)
+        # for f in files:
+        #     os.remove(f)
+
         
     else:
        print("[INFO]: Photos have been taken in Portrait Mode")
