@@ -4,17 +4,18 @@ import stitching ,cv2 ,os, glob
 
 parser = ArgumentParser()
 
-parser.add_argument("-v", "--video" ,action="store_true", help="add this argument if you want to stitch images from video")
+parser.add_argument("-vp", "--videoProcess" ,action="store_true", help="add this argument if you want to stitch images from video")
 parser.add_argument("-i", "--input" ,type=str,default="imgs_1/", help="add this argument if you have different directory")
+parser.add_argument("-v", "--video" ,type=str,default="video_1.mov", help="add this argument if you have different directory")
 args = parser.parse_args()
 
 
 
 status = False
-video = args.video
-if (video):
+videoProcess = args.videoProcess
+if (videoProcess):
     path = "out_imgs/"
-    vidcap = cv2.VideoCapture('Video_2.mov')
+    vidcap = cv2.VideoCapture(args.video)
     fps = round(vidcap.get(cv2.CAP_PROP_FPS))
     print("[INFO]: Video is "+str(fps)+" FPS")
     if (fps > 50):
@@ -61,13 +62,28 @@ if (video):
         
     else:
         print("[INFO]: Video has been taken in Portrait Mode")
-        stitcher2 = cv2.Stitcher_create()
-        images = []
+        stitcher = stitching.Stitcher()
+        settings = {"detector": "sift", "confidence_threshold": 0.2}
+        stitcher = stitching.Stitcher(**settings)
+        tempCount = 0
+        tempPath = "cache/"
         for samsom in sam:
            image = cv2.imread(samsom)
            resized = cv2.resize(image,(int(image.shape[1]*scalar),int(image.shape[0]*scalar)),interpolation = cv2.INTER_AREA)
-           images.append(resized)
-        (status,panorama) = stitcher2.stitch(images)
+           cv2.imwrite(tempPath+str(tempCount)+".png", resized)
+           tempCount +=1
+        myList2 = os.listdir(tempPath)
+        sam = list(map(tempPath.__add__,  myList2))
+        panorama = stitcher.stitch(sam)
+        status = True
+        images = []
+        # stitcher2 = cv2.Stitcher_create()
+        # images = []
+        # for samsom in sam:
+        #    image = cv2.imread(samsom)
+        #    resized = cv2.resize(image,(int(image.shape[1]*scalar),int(image.shape[0]*scalar)),interpolation = cv2.INTER_AREA)
+        #    images.append(resized)
+        # (status,panorama) = stitcher2.stitch(images)
         
 
 else:
@@ -107,17 +123,20 @@ else:
         
     else:
        print("[INFO]: Photos have been taken in Portrait Mode")
-       stitcher2 = cv2.Stitcher_create()
+       # stitcher2 = cv2.Stitcher_create()
+       stitcher = stitching.Stitcher()
+       settings = {"detector": "sift", "confidence_threshold": 0.2}
+       stitcher = stitching.Stitcher(**settings)
        sam = list(map(path.__add__,  myList))
-       dim = (1080,2340)
+       panorama = stitcher.stitch(sam)
+       status = True
        images = []
-       for samsom in sam:
-           image = cv2.imread(samsom)
-           resized = cv2.resize(image,(int(image.shape[1]*scalar),int(image.shape[0]*scalar)),interpolation = cv2.INTER_AREA)
-           print(samsom)
-           
-           images.append(resized)
-       (status,panorama) = stitcher2.stitch(images)
+       # for samsom in sam:
+       #     image = cv2.imread(samsom)
+       #     resized = cv2.resize(image,(int(image.shape[1]*scalar),int(image.shape[0]*scalar)),interpolation = cv2.INTER_AREA)
+       #     
+       #     images.append(resized)
+       # (status,panorama) = stitcher2.stitch(images)
        
 
 # cv2.imshow('image',resized)
@@ -128,4 +147,7 @@ if (status):
 else:
     print("[INFO]: Error with the panoramic process")
 
+# cv2.imshow('Image',panorama)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
 cv2.imwrite("test1.png", panorama)
