@@ -42,7 +42,7 @@ if (videoProcess):
     if (width > height):
         print("[INFO]: Video has been taken in Landscape Mode")
         stitcher = stitching.Stitcher()     # taken from CV2 library
-        settings = {"detector": "sift", "confidence_threshold": 0.2}
+        settings = {"detector": "akaze", "confidence_threshold": 0.2}
         stitcher = stitching.Stitcher(**settings)
         dim = (720,1280)
         images = []
@@ -63,7 +63,7 @@ if (videoProcess):
     else:
         print("[INFO]: Video has been taken in Portrait Mode")
         stitcher = stitching.Stitcher()
-        settings = {"detector": "sift", "confidence_threshold": 0.2}
+        settings = {"detector": "akaze", "confidence_threshold": 0.2}
         stitcher = stitching.Stitcher(**settings)
         tempCount = 0
         tempPath = "cache/"
@@ -100,7 +100,7 @@ else:
         print("[INFO]: Photos have been taken in Landscape Mode")
 
         stitcher = stitching.Stitcher()     # taken from CV2 library
-        settings = {"detector": "sift", "confidence_threshold": 0.2}
+        settings = {"detector": "akaze", "confidence_threshold": 0.2}
         stitcher = stitching.Stitcher(**settings)
         sam = list(map(path.__add__,  myList))
         dim = (1280,720)
@@ -125,7 +125,7 @@ else:
        print("[INFO]: Photos have been taken in Portrait Mode")
        # stitcher2 = cv2.Stitcher_create()
        stitcher = stitching.Stitcher()
-       settings = {"detector": "sift", "confidence_threshold": 0.2}
+       settings = {"detector": "akaze", "confidence_threshold": 0.2}
        stitcher = stitching.Stitcher(**settings)
        sam = list(map(path.__add__,  myList))
        panorama = stitcher.stitch(sam)
