@@ -1,5 +1,5 @@
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
-import stitching ,cv2 ,os
+import stitching ,cv2 ,os, glob
 
 
 parser = ArgumentParser()
@@ -14,9 +14,9 @@ status = False
 video = args.video
 if (video):
     path = "out_imgs/"
-    vidcap = cv2.VideoCapture('Video_1.mov')
+    vidcap = cv2.VideoCapture('Video_2.mov')
     fps = round(vidcap.get(cv2.CAP_PROP_FPS))
-    print("Video is "+str(fps)+" FPS")
+    print("[INFO]: Video is "+str(fps)+" FPS")
     if (fps > 50):
         limiter = 40
     else:
@@ -68,7 +68,7 @@ if (video):
         
 
 else:
-    path = "imgs_1/"
+    path = "imgs_2/"
     myList = os.listdir(path)
     img = cv2.imread(path+myList[0])
     width = int(img.shape[1])
@@ -107,6 +107,7 @@ else:
        for samsom in sam:
            image = cv2.imread(samsom)
            resized = cv2.resize(image,(int(image.shape[1]*scalar),int(image.shape[0]*scalar)),interpolation = cv2.INTER_AREA)
+           print(samsom)
            
            images.append(resized)
        (status,panorama) = stitcher2.stitch(images)
