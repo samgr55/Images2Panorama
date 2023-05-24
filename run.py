@@ -52,7 +52,7 @@ if (videoProcess):
         for samsom in sam:
            image = cv2.imread(samsom)
            resized = cv2.resize(image,(int(image.shape[1]*scalar),int(image.shape[0]*scalar)),interpolation = cv2.INTER_AREA)
-           cv2.imwrite(tempPath+str(tempCount)+".png", resized)
+           cv2.imwrite(tempPath+str(tempCount)+".jpg", resized)
            tempCount +=1
         myList2 = os.listdir(tempPath)
         sam = list(map(tempPath.__add__,  myList2))
@@ -69,7 +69,7 @@ if (videoProcess):
         for samsom in sam:
            image = cv2.imread(samsom)
            resized = cv2.resize(image,(int(image.shape[1]*scalar),int(image.shape[0]*scalar)),interpolation = cv2.INTER_AREA)
-           cv2.imwrite(tempPath+str(tempCount)+".png", resized)
+           cv2.imwrite(tempPath+str(tempCount)+".jpg", resized)
            tempCount +=1
         myList2 = os.listdir(tempPath)
         sam = list(map(tempPath.__add__,  myList2))
@@ -92,7 +92,7 @@ else:
     width = int(img.shape[1])
     height = int(img.shape[0])
     if(width > 3000 or height > 3000):
-        scalar = 0.3
+        scalar = 0.7
     else:
         scalar = 0.7
     if (width > height):
@@ -109,7 +109,7 @@ else:
         for samsom in sam:
            image = cv2.imread(samsom)
            resized = cv2.resize(image,(int(image.shape[1]*scalar),int(image.shape[0]*scalar)),interpolation = cv2.INTER_AREA)
-           cv2.imwrite(tempPath+str(tempCount)+".png", resized)
+           cv2.imwrite(tempPath+str(tempCount)+".jpg", resized)
            tempCount +=1
         myList2 = os.listdir(tempPath)
         sam = list(map(tempPath.__add__,  myList2))
@@ -130,12 +130,19 @@ else:
        panorama = stitcher.stitch(sam)
        status = True
        images = []
-       # for samsom in sam:
-       #     image = cv2.imread(samsom)
-       #     resized = cv2.resize(image,(int(image.shape[1]*scalar),int(image.shape[0]*scalar)),interpolation = cv2.INTER_AREA)
-       #     
-       #     images.append(resized)
-       # (status,panorama) = stitcher2.stitch(images)
+       tempCount = 0
+       tempPath = "cache/"
+       for samsom in sam:
+        image = cv2.imread(samsom)
+        resized = cv2.resize(image,(int(image.shape[1]*scalar),int(image.shape[0]*scalar)),interpolation = cv2.INTER_AREA)
+        cv2.imwrite(tempPath+str(tempCount)+".jpg", resized)
+        tempCount +=1
+       myList2 = os.listdir(tempPath)
+       sam = list(map(tempPath.__add__,  myList2))
+       panorama = stitcher.stitch(sam)
+       status = True
+       
+       
 
 # files = glob.glob(tempPath)
 # for f in files:
