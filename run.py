@@ -111,6 +111,7 @@ else:
            resized = cv2.resize(image,(int(image.shape[1]*scalar),int(image.shape[0]*scalar)),interpolation = cv2.INTER_AREA)
            cv2.imwrite(tempPath+str(tempCount)+".jpg", resized)
            tempCount +=1
+           # images.append(resized)
         myList2 = os.listdir(tempPath)
         sam = list(map(tempPath.__add__,  myList2))
         panorama = stitcher.stitch(sam)
