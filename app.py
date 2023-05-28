@@ -42,6 +42,6 @@ def upload():
     return render_template('result.html', img_data=img_str)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,port=80)
     
     
