@@ -1,5 +1,4 @@
-kornia
-kornia_rs
-torch
+flask
+stitching
 matplotlib
 opencv-python
