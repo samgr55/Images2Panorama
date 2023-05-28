@@ -87,6 +87,7 @@ class Stitcher:
     def stitch(self, img_names):
         self.initialize_registration(img_names)
         imgs = self.resize_medium_resolution()
+        # imgs = img_names
         features = self.find_features(imgs)
         matches = self.match_features(features)
         imgs, features, matches = self.subset(imgs, features, matches)
